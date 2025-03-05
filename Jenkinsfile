@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/AntonovAndrei/MyTestWebApi.git', branch: 'main'
+                git url: 'https://github.com/AntonovAndrei/MyTestWebApi.git', branch: 'master'
             }
         }
         stage('Restore and Build') {
