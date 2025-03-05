@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/dotnet/sdk:8.0'
+        }
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -20,8 +24,9 @@ pipeline {
             }
         }
         stage('Docker Build') {
+            agent any // переопределяем агент для этапа Docker Build
             steps {
-                echo 'Building...'
+                echo 'Building Docker image...'
                 sh 'docker build -t mytestwebapi .'
             }
         }
@@ -32,3 +37,4 @@ pipeline {
         }
     }
 }
+
