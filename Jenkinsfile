@@ -25,18 +25,10 @@ pipeline {
                 sh 'docker build -t mytestwebapi .'
             }
         }
-        // stage('Deploy') {
-        //     steps {
-        //         sh 'docker stop mytestwebapi || true'
-        //         sh 'docker rm mytestwebapi || true'
-        //         sh 'docker run -d --name mytestwebapi -p 9090:8080 mytestwebapi'
-        //     }
-        // }
-        post {
-            always {
-                // Очищаем рабочую область после завершения сборки
-                cleanWs()
-            }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }
