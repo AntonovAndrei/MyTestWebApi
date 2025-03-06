@@ -31,16 +31,6 @@ pipeline {
                 sh 'dotnet test'
             }
         }
-        stage('Docker Build') {
-            // «десь переопредел€ем агента, чтобы использовать хостовую машину, где доступна команда docker
-            agent any
-            steps {
-                // ¬осстанавливаем рабочее пространство дл€ сборки Docker образа
-                unstash 'build'
-                echo 'Building Docker image...'
-                sh 'docker build -t mytestwebapi .'
-            }
-        }
     }
     post {
         always {
