@@ -2,14 +2,14 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/dotnet/sdk:8.0'
-            // Дополнительно можно указать аргументы контейнера, например, для монтирования кэша nuget:
-            // args '-v /var/jenkins_home/.nuget:/root/.nuget'
+            // Если внутри контейнера нужно выполнять Docker-команды, раскомментируйте строку ниже:
+            // args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     stages {
         stage('Checkout') {
             steps {
-                // Клонируем репозиторий прямо в контейнере
+                // Клонируем репозиторий
                 git url: 'https://github.com/AntonovAndrei/MyTestWebApi.git', branch: 'master'
             }
         }
@@ -29,8 +29,11 @@ pipeline {
     }
     post {
         always {
-            // Очистка рабочего пространства после сборки
-            cleanWs()
+            script {
+                if (env.WORKSPACE) {
+                    cleanWs()
+                }
+            }
         }
     }
 }
