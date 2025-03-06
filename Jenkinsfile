@@ -1,9 +1,15 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/dotnet/sdk:8.0'
+            // Дополнительно можно указать аргументы контейнера, например, для монтирования кэша nuget:
+            // args '-v /var/jenkins_home/.nuget:/root/.nuget'
+        }
+    }
     stages {
         stage('Checkout') {
             steps {
-                // Клонируем репозиторий
+                // Клонируем репозиторий прямо в контейнере
                 git url: 'https://github.com/AntonovAndrei/MyTestWebApi.git', branch: 'master'
             }
         }
@@ -28,5 +34,3 @@ pipeline {
         }
     }
 }
-
-
